@@ -76,7 +76,7 @@ const jwtToken = (() => {
   const kv = value
     .split("&")
     .map((kv) => kv.split("="))
-    .find(([k, _]) => k === "Token");
+    .find(([k]) => k === "Token");
   return kv?.[1];
 })();
 
