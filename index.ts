@@ -78,6 +78,9 @@ const jwtToken = (() => {
   return kv?.[1];
 })();
 
+await page.close();
+await browser.close();
+
 console.log(jwtToken);
 
 console.log(
@@ -87,5 +90,3 @@ console.log(
 );
 
 // await page.screenshot({ path: "example.png" });
-await page.close();
-await browser.close();
