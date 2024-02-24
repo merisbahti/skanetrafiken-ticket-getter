@@ -12,7 +12,7 @@ const sleep = (ms: number) =>
   });
 
 const browser = await puppeteer.launch({
-  headless: true,
+  headless: "new",
   executablePath: executablePath,
   defaultViewport: { height: 720, width: 700 },
   slowMo: 100,
