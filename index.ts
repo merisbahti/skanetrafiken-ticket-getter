@@ -1,22 +1,19 @@
 import puppeteer from "puppeteer";
 const username = Bun.env["USERNAME"];
 const password = Bun.env["PASSWORD"];
+const executablePath = Bun.env["EXECUTABLE_PATH"];
 
-if (!username || !password)
+if (!username || !password || !executablePath)
   throw new Error("Both `USERNAME` and `PASSWORD` need to be defined in en`");
 
-const sleep = (ms) =>
+const sleep = (ms: number) =>
   new Promise((resolve) => {
     setTimeout(() => resolve(null), ms);
   });
 
-const mac = true;
-
 const browser = await puppeteer.launch({
-  headless: "new",
-  executablePath: mac
-    ? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-    : "/usr/bin/chromium-browser",
+  headless: true,
+  executablePath: executablePath,
   defaultViewport: { height: 720, width: 700 },
   slowMo: 100,
 });
@@ -79,7 +76,7 @@ const jwtToken = (() => {
   const kv = value
     .split("&")
     .map((kv) => kv.split("="))
-    .find(([k, v]) => k === "Token");
+    .find(([k, _]) => k === "Token");
   return kv?.[1];
 })();
 
