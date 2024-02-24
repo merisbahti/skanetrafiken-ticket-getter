@@ -1,0 +1,13 @@
+{
+  "name": "skanetrafiken-ticket-getter",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "bun-types": "latest",
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {},
+  "dependencies": {
+    "puppeteer": "^21.4.1"
+  }
+}
