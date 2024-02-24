@@ -69,8 +69,6 @@ await sleep(1500);
 const cookies = await page.cookies();
 const jwtTokenCookie = cookies.find((x) => x.name === "StarJwtTokenCookieName");
 
-console.log(jwtTokenCookie);
-
 const jwtToken = (() => {
   const value = jwtTokenCookie?.value ?? "";
   const kv = value
