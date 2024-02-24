@@ -1,7 +1,9 @@
 import puppeteer from "puppeteer";
-const username = Bun.env["USERNAME"];
-const password = Bun.env["PASSWORD"];
-const executablePath = Bun.env["EXECUTABLE_PATH"];
+import "dotenv";
+
+const username = process.env["USERNAME"];
+const password = process.env["PASSWORD"];
+const executablePath = process.env["EXECUTABLE_PATH"];
 
 if (!username || !password || !executablePath)
   throw new Error("Both `USERNAME` and `PASSWORD` need to be defined in en`");
@@ -13,7 +15,6 @@ const sleep = (ms: number) =>
 
 const browser = await puppeteer.launch({
   headless: "new",
-  executablePath: executablePath,
   defaultViewport: { height: 720, width: 700 },
   slowMo: 100,
 });
