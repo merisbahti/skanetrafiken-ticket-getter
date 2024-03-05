@@ -11,6 +11,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@types/jest": "^29.5.12",
     "dotenv": "^16.4.5",
     "puppeteer": "^21.4.1",
     "zod": "^3.22.4"

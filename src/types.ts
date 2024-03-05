@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const TicketSchema = z.object({
+export const TicketSchema = z.object({
   addons: z.array(z.unknown()),
   travellers: z.array(z.unknown()),
   bearerCategory: z.string(),
@@ -32,6 +32,10 @@ const TicketSchema = z.object({
   isSeasonTicket: z.boolean(),
 });
 
-export const ResponseSchema = z.object({
+export type Ticket = z.TypeOf<typeof TicketSchema>;
+
+export const TicketsResponseSchema = z.object({
   tickets: z.array(TicketSchema),
 });
+
+export type TicketResponse = z.TypeOf<typeof TicketsResponseSchema>;
