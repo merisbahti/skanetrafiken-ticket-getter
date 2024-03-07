@@ -1,7 +1,7 @@
 import "dotenv";
-import { getSkanetrafikenToken } from "./getSkanetrafikenToken";
-import { TicketsResponseSchema } from "./types";
-import { getActiveTickets } from "./getActiveTickets";
+import { getSkanetrafikenToken } from "./getSkanetrafikenToken.js";
+import { TicketsResponseSchema } from "./types.js";
+import { getActiveTickets } from "./getActiveTickets.js";
 import express from "express";
 
 const app = express();
