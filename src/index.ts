@@ -1,6 +1,7 @@
 import "dotenv";
 import { getSkanetrafikenToken } from "./getSkanetrafikenToken";
 import { TicketsResponseSchema } from "./types";
+import { getActiveTickets } from "./getActiveTickets";
 
 const username = process.env["USERNAME"];
 const password = process.env["PASSWORD"];
@@ -31,5 +32,9 @@ const result = await fetch(
   .then((x) => TicketsResponseSchema.parse(x));
 
 console.log(JSON.stringify(result, null, 2));
+console.log(
+  "active ticket dates:",
+  getActiveTickets(result.tickets, new Date()).map((x) => x.activeTo),
+);
 
 // await page.screenshot({ path: "example.png" });
