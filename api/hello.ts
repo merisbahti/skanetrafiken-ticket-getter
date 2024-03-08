@@ -1,26 +1,14 @@
 import { getActiveTickets } from "../src/getActiveTickets.js";
-import { getSkanetrafikenToken } from "../src/getSkanetrafikenToken.js";
 import { TicketsResponseSchema } from "../src/types.js";
-import { zodVerify } from "../src/zodVerify.js";
+import { kv } from "@vercel/kv";
 
 export async function GET(_request: Request) {
-  const username = process.env["USERNAME"];
-  const password = process.env["PASSWORD"];
-  const executablePath = process.env["EXECUTABLE_PATH"];
-
-  if (!username || !password || !executablePath)
-    throw new Error("Both `USERNAME` and `PASSWORD` need to be defined in en`");
-
-  const jwtToken = await getSkanetrafikenToken({
-    username,
-    password,
-    executablePath,
-  });
-
+  const token = await kv.get("skanetrafiken-token");
+  console.log(token);
   const result = await fetch(
     "https://www.skanetrafiken.se/gw-bns/registered-app",
     {
-      headers: { Authorization: `Bearer ${jwtToken}` },
+      headers: { Authorization: `Bearer ${token}` },
     },
   )
     .then((x) =>
@@ -30,21 +18,8 @@ export async function GET(_request: Request) {
           )
         : x.json(),
     )
-    .then((x) => zodVerify(TicketsResponseSchema, x));
+    .then((x) => TicketsResponseSchema.parse(x));
 
-  if (!result.success) {
-    return new Response(
-      JSON.stringify({
-        error: result.error,
-      }),
-      { status: 400 },
-    );
-  }
-
-  return new Response(
-    JSON.stringify({
-      success: true,
-      activeTickets: getActiveTickets(result.data.tickets, new Date()),
-    }),
-  );
+  const activeTickets = getActiveTickets(result.tickets, new Date());
+  return new Response(JSON.stringify({ activeTickets }));
 }
