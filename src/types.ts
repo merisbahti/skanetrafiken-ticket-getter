@@ -5,7 +5,15 @@ export const TicketSchema = z.object({
   travellers: z.array(z.unknown()),
   bearerCategory: z.string(),
   ticketLoanStatus: z.union([z.literal(1), z.literal(0)]),
-  ticketLoanInfo: z.union([z.object({}), z.null()]),
+  ticketLoanInfo: z.union([
+    z.object({
+      returnDate: z.string(),
+      name: z.string(),
+      transferred: z.boolean(),
+      returned: z.boolean(),
+    }),
+    z.null(),
+  ]),
   isConnectedToAccount: z.boolean(),
   status: z.number(),
   isLenaTicket: z.boolean(),

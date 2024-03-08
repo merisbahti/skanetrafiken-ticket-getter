@@ -1,6 +1,7 @@
 import { getActiveTickets } from "../src/getActiveTickets.js";
 import { getSkanetrafikenToken } from "../src/getSkanetrafikenToken.js";
 import { TicketsResponseSchema } from "../src/types.js";
+import { zodVerify } from "../src/zodVerify.js";
 
 export async function GET(_request: Request) {
   const username = process.env["USERNAME"];
@@ -29,11 +30,21 @@ export async function GET(_request: Request) {
           )
         : x.json(),
     )
-    .then((x) => TicketsResponseSchema.parse(x));
+    .then((x) => zodVerify(TicketsResponseSchema, x));
+
+  if (!result.success) {
+    return new Response(
+      JSON.stringify({
+        error: result.error,
+      }),
+      { status: 400 },
+    );
+  }
 
   return new Response(
     JSON.stringify({
-      activeTickets: getActiveTickets(result.tickets, new Date()),
+      success: true,
+      activeTickets: getActiveTickets(result.data.tickets, new Date()),
     }),
   );
 }
