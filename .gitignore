@@ -177,3 +177,5 @@ dist
 
 tsconfig.tsbuildinfo
 .vercel
+
+example-data

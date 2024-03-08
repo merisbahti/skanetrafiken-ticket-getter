@@ -33,9 +33,7 @@ export async function GET(_request: Request) {
 
   return new Response(
     JSON.stringify({
-      activeTickets: getActiveTickets(result.tickets, new Date()).map(
-        (x) => x.activeTo,
-      ),
+      activeTickets: getActiveTickets(result.tickets, new Date()),
     }),
   );
 }
