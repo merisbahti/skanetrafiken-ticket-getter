@@ -5,5 +5,5 @@ export const getActiveTickets = (
   currentDate: Date,
 ): Array<Ticket> =>
   tickets.filter(
-    (x) => new Date(x.activeTo) > currentDate && x.ticketLoanInfo === null,
+    (x) => x.activated !== null && x.activeTo && new Date(x.activeTo) > currentDate && x.ticketLoanInfo === null,
   );
