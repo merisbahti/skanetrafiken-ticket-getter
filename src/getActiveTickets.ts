@@ -1,4 +1,4 @@
-import { Ticket } from "./types.ts";
+import { Ticket } from "./types.js";
 
 export const getActiveTickets = (
   tickets: Array<Ticket>,

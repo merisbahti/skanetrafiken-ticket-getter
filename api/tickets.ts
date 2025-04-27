@@ -1,7 +1,7 @@
-import { getActiveTickets } from "../src/getActiveTickets.ts";
+import { getActiveTickets } from "../src/getActiveTickets.js";
 
 import { kv } from "@vercel/kv";
-import { TicketsResponseSchema } from "../src/types.ts";
+import { TicketsResponseSchema } from "../src/types.js";
 
 export async function GET(_request: Request) {
   const token = await kv.get("skanetrafiken-token");

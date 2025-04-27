@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-import { sleep } from "./sleep.ts";
+import { sleep } from "./sleep.js";
 
 export const getSkanetrafikenToken = async ({
   username,
