@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-import { sleep } from "./sleep.js";
+import { sleep } from "./sleep.ts";
 
 export const getSkanetrafikenToken = async ({
   username,
@@ -11,53 +11,61 @@ export const getSkanetrafikenToken = async ({
   executablePath?: string;
 }): Promise<string> => {
   const browser = await puppeteer.launch({
-    headless: "new",
+     headless: false,
     executablePath,
     defaultViewport: { height: 720, width: 700 },
-    slowMo: 100,
+    slowMo: 20,
   });
   const page = await browser.newPage();
-  await page.goto("https://skanetrafiken.se");
+  await page.goto("https://www.skanetrafiken.se/mitt-konto#/");
   // await page.screenshot({ path: "stuff.png" });
+
+  console.log("finding and clicking the cookie button");
+  
   const cookieButton = await page.$$("#CybotCookiebotDialogBodyButtonAccept");
   await Promise.all(cookieButton.map((x) => x.click()));
 
-  const loginButton = await page.$$(
-    ".st-header__main__top__action.st-header__main__top__action--has-background",
-  );
 
-  // await page.screenshot({ path: "example.png" });
-  await Promise.all(loginButton.map((x) => x.click()));
+  console.log("finding and clicking the login button");
+  
 
-  const myAccountButton = await page
-    .$$(".st-menu-dropdown__list__item__link")
-    .then((x) => x[0]);
 
-  await sleep(200);
-  await myAccountButton.click();
-
-  // await page.screenshot({ path: "ss1.png" });
-
+  console.log("filling email");
+  
   await page
     .$$("#email")
     .then((xs) => xs[0])
     .then((x) => x.type(username));
 
-  await sleep(500);
+  await sleep(200);
+
+  console.log("filling password");
 
   await page
     .$$("#password")
     .then((xs) => xs[0])
     .then((x) => x.type(password));
 
-  await sleep(500);
+  await sleep(200);
+
+
+  console.log("finding and clicking the login button");
+
+     await page.screenshot({ path: "ss1.png" });
+  // get console logs from browser
+  const consoleLogs: string[] = [];
+  page.on("console", (msg) => {
+      consoleLogs.push(msg.text());
+  });
 
   await page
-    .$$("#submit")
+    .$$(".st-login-form__actions #submit")
     .then((xs) => xs[0])
     .then((x) => x.click());
 
   await sleep(1500);
+  await page.screenshot({ path: "ss1.png" });
+
 
   const cookies = await page.cookies();
   const jwtTokenCookie = cookies.find(
@@ -73,8 +81,11 @@ export const getSkanetrafikenToken = async ({
     return kv?.[1];
   })();
 
+
+
   await page.close();
   await browser.close();
+  
 
   if (!jwtToken) throw new Error("No jwt token found");
 

@@ -1,5 +1,5 @@
 import "dotenv";
-import { getSkanetrafikenToken } from "../src/getSkanetrafikenToken.js";
+import { getSkanetrafikenToken } from "../src/getSkanetrafikenToken.ts";
 import { kv } from "@vercel/kv";
 
 const username = process.env["USERNAME"];
