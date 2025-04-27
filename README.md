@@ -1,15 +1,18 @@
 # skanetrafiken-ticket-getter
 
-To install dependencies:
+## install deps
 
 ```bash
-bun install
+npm i
 ```
 
-To run:
+## serverless fn:
 
 ```bash
-bun run index.ts
+vercel dev
 ```
 
-This project was created using `bun init` in bun v1.0.7. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+## get token:
+```bash
+npm run token
+```

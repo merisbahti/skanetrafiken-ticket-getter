@@ -1,1 +1,0 @@
-bun test && bunx tsc && bunx eslint .

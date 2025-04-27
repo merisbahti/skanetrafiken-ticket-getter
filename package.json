@@ -5,20 +5,16 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
-    "bun-types": "latest",
     "eslint": "^8.57.0",
-    "husky": "^9.0.11",
     "typescript": "^5.4.2"
   },
   "dependencies": {
-    "@types/jest": "^29.5.12",
     "@vercel/kv": "^1.0.1",
     "dotenv": "^16.4.5",
     "puppeteer": "^24.7.2",
     "zod": "^3.22.4"
   },
   "scripts": {
-    "prepare": "husky",
     "token": "node --env-file .env scripts/getAndStoreToken.ts"
   }
 }
